@@ -199,8 +199,7 @@ from chaleng2 import lfsr
 
 with open("key","rb") as f:
     stream=f.read(4)
-s=''.join([bin(ord(it))[2:] for it in stream])
-s=s.rjust(32,'0')
+s=''.join([bin(256+ord(it))[3:] for it in stream])
 R=int(s[31:]+s[:31],2)
 mask = 0b10100100000010000000100010010100
 ss=''
