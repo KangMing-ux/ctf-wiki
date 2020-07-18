@@ -168,21 +168,27 @@ f.close()
 
 
 具体分析如下：首先此题的LFSR模型如图所示
+
 ![img](./figure/lfsr-model.png)
 
 其中 $a_{n-1},a_{n-2},\cdots,a_0$ 为程序中 mask 的二进制位，当 $a_i=1$ 时，将 $b_i$ 输入异或运算，否则 $b_i$ 不输入异或运算；根据模型我们可以得到如下等式：
+
 ![img](./figure/lfsr-model-1.png)
 
 其中的加法为异或，由于 $a_{n-1}=1$ ，故将上述等式重写为：
+
 ![img](./figure/lfsr-model-2.png)
 
 从而，由异或的性质
+
 ![img](./figure/lfsr-model-3.png)
 
 再将等式“还原”
+
 ![img](./figure/lfsr-model-4.png)
 
 为了让你理解得更清楚，把列反序一下
+
 ![img](./figure/lfsr-model-5.png)
 
 所以你也看明白了，只需要输出密钥流的32个连续的比特，将 $R$ 的二进制位初始化为 $k_{n} k{n-1}\cdots k_{2} k_{1}$ ，再循环右移 1 位，输入函数 lfsr，则 lfsr 输出的就是初始种子的第一个比特，接下来 $R$ 的二进制位的更新方式为：先循环右移 1 位，然后将左起第 2 位用 lfsr 输出的密钥流替换，然后将 $R$ 重新输入函数 lfsr，直到算出初始种子的全部比特位。
